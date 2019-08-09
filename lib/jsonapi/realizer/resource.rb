@@ -39,6 +39,7 @@ module JSONAPI
       attr_accessor(:headers)
       attr_writer(:context)
       attr_accessor(:scope)
+      attr_reader(:total_count)
 
       def initialize(**keyword_arguments)
         super(**keyword_arguments)
@@ -49,6 +50,8 @@ module JSONAPI
         if filtering?
           @scope = adapter.filtering(scope, filters)
         end
+
+        @total_count = scope.size
 
         if include?
           @scope = adapter.include_relationships(scope, includes)
