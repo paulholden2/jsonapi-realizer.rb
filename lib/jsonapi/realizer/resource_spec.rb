@@ -88,6 +88,7 @@ RSpec.describe(JSONAPI::Realizer::Resource) do
       before do
         account = Account.create!(:id => 9, :name => "Dan Gebhardt", :twitter => "dgeb")
         Photo.create!(:id => 11, :photographer => account, :title => "Ember Hamster", :src => "http://example.com/images/productivity.png")
+        Photo.create!(:id => 12, :photographer => account, :title => "Ember Hamster", :src => "http://example.com/images/productivity.png")
       end
 
       it "object is a Photo" do
@@ -95,7 +96,22 @@ RSpec.describe(JSONAPI::Realizer::Resource) do
       end
 
       it "clears relationship on realizing nil" do
+        subject.object.save!
         expect(subject.object.photographer).to be_nil
+      end
+
+      it "clears relationships on realizing nil 2" do
+        expect(PhotoRealizer.new(intent: :update, parameters:
+          {
+            "id" => "12",
+            "data" => {
+              "id" => "12",
+              "type" => "photos",
+              "relationships" => {
+                "photographer" => nil
+              }
+            }
+          }, headers: headers).object.photographer).to be_nil
       end
     end
   end
