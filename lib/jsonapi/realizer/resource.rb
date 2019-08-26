@@ -88,7 +88,7 @@ module JSONAPI
       end
 
       def paginate?
-        parameters.key?("page") && (parameters.fetch("page").key?("limit") || parameters.fetch("page").key?("offset"))
+        intent == :index && parameters.key?("page") && (parameters.fetch("page").key?("limit") || parameters.fetch("page").key?("offset"))
       end
 
       def pagination

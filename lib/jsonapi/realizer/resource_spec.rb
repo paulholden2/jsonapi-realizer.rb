@@ -97,6 +97,27 @@ RSpec.describe(JSONAPI::Realizer::Resource) do
         end
       end
 
+      context "show with paging parameters" do
+        let(:intent) {:show}
+        let(:parameters) do
+          {
+            "id" => "11",
+            "data" => {
+              "id" => "11",
+              "type" => "photos"
+            },
+            "page" => {
+              "limit" => "1",
+              "offset" => "1"
+            }
+          }
+        end
+
+        it "returns primary resource regardless of paging" do
+          expect(subject.object.id).to eq(11)
+        end
+      end
+
       context "clearing relationship" do
         let(:intent) {:update}
         let(:parameters) do
