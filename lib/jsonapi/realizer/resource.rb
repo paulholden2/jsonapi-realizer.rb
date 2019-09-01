@@ -99,7 +99,7 @@ module JSONAPI
       end
 
       def sorting?
-        parameters.key?("sort")
+        intent == :index && parameters.key?("sort")
       end
 
       def sorts
