@@ -120,7 +120,7 @@ module JSONAPI
       end
 
       def filtering?
-        parameters.key?("filter")
+        intent == :index && parameters.key?("filter")
       end
 
       def filters
