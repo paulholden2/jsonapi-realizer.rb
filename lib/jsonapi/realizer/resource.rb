@@ -59,6 +59,8 @@ module JSONAPI
 
         if sorting?
           @scope = adapter.sorting(scope, sorts)
+        else
+          @scope = adapter.sorting(scope, [[['id'], '+']])
         end
 
         if paginate?
